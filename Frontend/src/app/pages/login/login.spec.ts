@@ -5,27 +5,28 @@ import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { provideRouter } from '@angular/router';
 
 describe('Login Component', () => {
   let component: Login;
   let authServiceSpy: { login: ReturnType<typeof vi.fn> };
-  let routerSpy: { navigate: ReturnType<typeof vi.fn> };
+  let router: Router;
 
   beforeEach(async () => {
     authServiceSpy = { login: vi.fn() };
-    routerSpy = { navigate: vi.fn() };
 
     await TestBed.configureTestingModule({
-      imports: [Login, FormsModule, RouterModule.forRoot([])],
+      imports: [Login, FormsModule],
       providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: Router, useValue: routerSpy }
+        provideRouter([]),
+        { provide: AuthService, useValue: authServiceSpy }
       ]
     }).compileComponents();
 
     const fixture = TestBed.createComponent(Login);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
+    vi.spyOn(router, 'navigate').mockResolvedValue(true);
     fixture.detectChanges();
   });
 
@@ -43,7 +44,7 @@ describe('Login Component', () => {
     component.onSubmit({ valid: true } as any);
 
     expect(localStorage.getItem('currentUserId')).toBe('1');
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/rent']);
+    expect(router.navigate).toHaveBeenCalledWith(['/rent']);
   });
 
   it('should show error on login failure', () => {
