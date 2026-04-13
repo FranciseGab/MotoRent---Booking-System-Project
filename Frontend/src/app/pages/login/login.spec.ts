@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 describe('Login Component', () => {
   let component: Login;
@@ -17,9 +17,8 @@ describe('Login Component', () => {
     routerSpy = { navigate: vi.fn() };
 
     await TestBed.configureTestingModule({
-      imports: [Login, FormsModule],
+      imports: [Login, FormsModule, RouterModule.forRoot([])],
       providers: [
-        provideRouter([]),
         { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy }
       ]
