@@ -1,4 +1,3 @@
-SE2 Finals Exam
 # MOTORRENT SYSTEM
 
 > A simple motor renting system demonstrating a fullstack implementation using Angular (Frontend) and ASP.NET Core (Backend) with unit tests.
@@ -9,6 +8,7 @@ SE2 Finals Exam
 
 | Feature | Description |
 |---------|-------------|
+| Signup | Creation of Account |
 | Login | User authentication |
 | Renting | Select a motor and number of days to rent |
 | Transaction | View all rent transactions made |
@@ -18,7 +18,7 @@ SE2 Finals Exam
 ## System Flow
 
 ```
-User logs in → Redirect to Renting → Select a motor + number of days → Transaction → History
+User visits site → Signup (if no account) → Login → Renting → Select a motor + number of days → Transaction History
 ```
 
 ---
@@ -84,6 +84,10 @@ Frontend/
 │   │   │   │   ├── login.ts              # Uses AuthService
 │   │   │   │   ├── login.spec.ts         # Unit tests
 │   │   │   │   └── login.css
+│   │   │   ├── signup/
+│   │   │   │   ├── signup.html
+│   │   │   │   ├── signup.ts             # Uses AuthService
+│   │   │   │   └── signup.css
 │   │   │   ├── renting/
 │   │   │   │   ├── renting.html
 │   │   │   │   ├── renting.ts
@@ -140,7 +144,7 @@ Backend/
     │
     ├── Db/                           # Database layer
     │   ├── Models/                   # Entity models
-    │   ├── Seeds/                    # Seed data
+    │   ├── Seeds/                    # Seed data (Motors only)
     │   ├── AppDbContext.cs           # EF Core DB context
     │   ├── DbInit.cs                 # DB initializer
     │   └── db.sqlite                 # SQLite database file
@@ -151,7 +155,8 @@ Backend/
     │
     ├── Services/                     # Business logic layer
     │   ├── CustomerService.cs
-    │   └── MotorService.cs
+    │   ├── MotorService.cs
+    │   └── TransactionService.cs
     │
     └── Properties/
         └── launchSettings.json       # Dev server config (port 5185)
