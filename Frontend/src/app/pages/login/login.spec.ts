@@ -1,20 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Login } from './login';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 describe('Login Component', () => {
   let component: Login;
-  let fixture: ComponentFixture<Login>;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let routerSpy: jasmine.SpyObj<Router>;
+  let authServiceSpy: { login: ReturnType<typeof vi.fn> };
+  let routerSpy: { navigate: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['login']);
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    authServiceSpy = { login: vi.fn() };
+    routerSpy = { navigate: vi.fn() };
 
     await TestBed.configureTestingModule({
       imports: [Login, FormsModule],
@@ -25,7 +25,7 @@ describe('Login Component', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Login);
+    const fixture = TestBed.createComponent(Login);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -37,7 +37,7 @@ describe('Login Component', () => {
 
   it('should login successfully and navigate', () => {
     const mockUser = { id: 1, email: 'test@test.com' };
-    authServiceSpy.login.and.returnValue(of(mockUser));
+    authServiceSpy.login.mockReturnValue(of(mockUser));
 
     component.email = 'test@test.com';
     component.password = '1234';
@@ -48,7 +48,7 @@ describe('Login Component', () => {
   });
 
   it('should show error on login failure', () => {
-    authServiceSpy.login.and.returnValue(
+    authServiceSpy.login.mockReturnValue(
       throwError(() => ({ error: { message: 'Invalid credentials' } }))
     );
 
