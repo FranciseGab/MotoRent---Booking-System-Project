@@ -102,11 +102,21 @@ jobs:
       - name: Build Angular
         run: npx ng build --base-href /MotoRent---Booking-System-Project/
 
-      - name: Show dist folder
-        run: ls -la dist/
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: Frontend/dist/frontend/browser
+      
+      - name: Build Angular
+        run: npx ng build --base-href /MotoRent---Booking-System-Project/
+
+      - name: Show dist folder
+        run: ls -la dist/
+        working-directory: Frontend
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: Frontend/dist/Client
