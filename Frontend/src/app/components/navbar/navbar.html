@@ -1,0 +1,32 @@
+<!-- <nav class="navbar">
+  <div class="navbar-brand">🏍️ MotorRent</div>
+  <div class="navbar-links">
+    <a routerLink="/rent" routerLinkActive="active">Rent</a>
+    <a routerLink="/transactions" routerLinkActive="active">Transaction History</a>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</nav> -->
+
+<nav class="navbar">
+  <div class="navbar-brand">
+    <div class="brand-emoji">🏍</div>
+    <div class="brand-text">
+      <span class="brand-name">Motor<span>Rent</span></span>
+      <span class="brand-tagline">Ride on demand</span>
+    </div>
+  </div>
+
+  <div class="navbar-links">
+    <a routerLink="/rent" routerLinkActive="active">Rent</a>
+    <a routerLink="/transactions" routerLinkActive="active">Transaction History</a>
+    <div class="nav-divider"></div>
+    <button class="logout-btn" (click)="logout()">
+      <svg viewBox="0 0 16 16" fill="none" width="14" height="14">
+        <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M11 11l3-3-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="14" y1="8" x2="6" y2="8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      Logout
+    </button>
+  </div>
+</nav>

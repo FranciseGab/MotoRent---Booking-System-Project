@@ -1,0 +1,155 @@
+<!-- ── ANIMATED BACKGROUND LAYERS (same as login) ── -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="dot-grid"></div>
+
+<div class="road-lines">
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+</div>
+
+<div class="moto-layer">
+  <div class="moto">
+    <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="36" r="12" stroke="#FF6B1A" stroke-width="3" fill="none"/>
+      <circle cx="14" cy="36" r="3.5" fill="#FF6B1A"/>
+      <circle cx="64" cy="36" r="12" stroke="#FF6B1A" stroke-width="3" fill="none"/>
+      <circle cx="64" cy="36" r="3.5" fill="#FF6B1A"/>
+      <path d="M14 36 L30 16 L50 16 L64 36" stroke="#FF6B1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M28 16 L42 10 L57 16" stroke="#FF6B1A" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="40" cy="10" rx="5" ry="6" fill="#FF6B1A" opacity="0.5"/>
+      <path d="M38 16 L36 28 L44 28 L42 16Z" fill="#FF6B1A" opacity="0.4"/>
+    </svg>
+  </div>
+  <div class="moto">
+    <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="36" r="12" stroke="#FF6B1A" stroke-width="3" fill="none"/>
+      <circle cx="14" cy="36" r="3.5" fill="#FF6B1A"/>
+      <circle cx="64" cy="36" r="12" stroke="#FF6B1A" stroke-width="3" fill="none"/>
+      <circle cx="64" cy="36" r="3.5" fill="#FF6B1A"/>
+      <path d="M14 36 L30 16 L50 16 L64 36" stroke="#FF6B1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M28 16 L42 10 L57 16" stroke="#FF6B1A" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="40" cy="10" rx="5" ry="6" fill="#FF6B1A" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="moto">
+    <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="36" r="12" stroke="#FF6B1A" stroke-width="3" fill="none"/>
+      <circle cx="14" cy="36" r="3.5" fill="#FF6B1A"/>
+      <circle cx="64" cy="36" r="12" stroke="#FF6B1A" stroke-width="3" fill="none"/>
+      <circle cx="64" cy="36" r="3.5" fill="#FF6B1A"/>
+      <path d="M14 36 L30 16 L50 16 L64 36" stroke="#FF6B1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M28 16 L42 10 L57 16" stroke="#FF6B1A" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ── SIGNUP CARD ── -->
+<div class="login-wrapper">
+  <div class="login-container">
+
+    <div class="card-top-bar"></div>
+
+    <div class="card-body">
+
+      <div class="login-logo">
+        <span class="logo-emoji">🏍</span>
+        <span class="logo-text">Motor<span class="logo-accent">Rent</span></span>
+      </div>
+
+      <h2 class="login-title">Create Account</h2>
+      <p class="login-subtitle">Join and start renting today</p>
+      <div class="form-divider"></div>
+
+      <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 16 16" fill="none" width="15" height="15">
+                <rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M1 5.5l7 4.5 7-4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <input
+              type="email"
+              class="form-input"
+              placeholder="you@example.com"
+              [(ngModel)]="email"
+              name="email"
+              required />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 16 16" fill="none" width="15" height="15">
+                <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                <circle cx="8" cy="10.5" r="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <input
+              type="password"
+              class="form-input"
+              placeholder="Min. 6 characters"
+              [(ngModel)]="password"
+              name="password"
+              required />
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 16 16" fill="none" width="15" height="15">
+                <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                <circle cx="8" cy="10.5" r="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <input
+              type="password"
+              class="form-input"
+              placeholder="Re-enter password"
+              [(ngModel)]="confirmPassword"
+              name="confirmPassword"
+              required />
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn" [disabled]="signupForm.invalid">
+          Create Account
+        </button>
+
+      </form>
+
+      <p class="error" *ngIf="error">{{ error }}</p>
+
+    </div>
+
+    <div class="card-footer">
+      <div class="footer-dot"></div>
+      <span>Already have an account?</span>
+      <a routerLink="/login" class="footer-link">Sign in</a>
+      <div class="footer-dot"></div>
+    </div>
+
+  </div>
+</div>

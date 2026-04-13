@@ -1,0 +1,166 @@
+<!-- <app-navbar></app-navbar>
+
+<div class="rent-container">
+  <h2>Rent a Motor</h2>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    Loading motors...
+  </div>
+
+  <div *ngIf="!loading && error" class="error-state">
+    <p>{{ error }}</p>
+    <button class="retry-btn" (click)="loadMotors()">Try Again</button>
+  </div>
+
+  <div *ngIf="!loading && !error && motors.length === 0" class="no-motors">
+    No motors available.
+  </div>
+
+  <div class="moto-grid" *ngIf="!loading && !error && motors.length > 0">
+<div class="motor-card" *ngFor="let motor of motors" [class.disabled]="!motor.isAvailable">
+  <img class="motor-image" [src]="motor.imageUrl" alt="{{ motor.brand }}" />
+  <div class="motor-brand">{{ motor.brand }}</div>
+  <div class="motor-price">${{ motor.pricePerDay }}/day</div>
+  <div class="motor-controls">
+    <label>Days:
+      <input type="number" min="1" [(ngModel)]="motor.days" [disabled]="!motor.isAvailable" />
+    </label>
+    <button (click)="rentMotor(motor)" [disabled]="!canRent(motor)">
+      {{ motor.isAvailable ? 'Rent' : 'Unavailable' }}
+    </button>
+  </div>
+  <p class="message" *ngIf="motor.message">{{ motor.message }}</p>
+</div>
+  </div>
+</div> -->
+
+<app-navbar></app-navbar>
+
+<div class="rent-page">
+
+  <!-- ── PAGE HEADER ── -->
+  <div class="page-header">
+    <div class="header-eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span>Available Fleet</span>
+    </div>
+    <h2 class="page-title">Choose Your <span class="title-accent">Ride</span></h2>
+    <p class="page-subtitle">Book by the day — ride on your terms</p>
+  </div>
+
+  <!-- ── LOADING STATE ── -->
+  <div *ngIf="loading" class="state-block">
+    <div class="spinner-ring">
+      <div class="spinner-track"></div>
+      <div class="spinner-fill"></div>
+    </div>
+    <p class="state-label">Loading fleet...</p>
+  </div>
+
+  <!-- ── ERROR STATE ── -->
+  <div *ngIf="!loading && error" class="state-block error-state">
+    <div class="state-icon">
+      <svg viewBox="0 0 24 24" fill="none" width="32" height="32">
+        <circle cx="12" cy="12" r="10" stroke="#ef4444" stroke-width="1.5"/>
+        <path d="M12 7v5M12 16h.01" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="state-label error-text">{{ error }}</p>
+    <button class="retry-btn" (click)="loadMotors()">
+      <svg viewBox="0 0 16 16" fill="none" width="14" height="14">
+        <path d="M2 8a6 6 0 1 0 1.5-3.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M2 4v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Try Again
+    </button>
+  </div>
+
+  <!-- ── EMPTY STATE ── -->
+  <div *ngIf="!loading && !error && motors.length === 0" class="state-block">
+    <div class="state-icon">
+      <svg viewBox="0 0 48 30" fill="none" width="52" height="52" opacity="0.3">
+        <circle cx="10" cy="22" r="7" stroke="#FF6B1A" stroke-width="2" fill="none"/>
+        <circle cx="38" cy="22" r="7" stroke="#FF6B1A" stroke-width="2" fill="none"/>
+        <path d="M10 22 L20 10 L30 10 L38 22" stroke="#FF6B1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 10 L42 10 L57 16" stroke="#FF6B1A" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="state-label">No motors available right now.</p>
+  </div>
+
+  <!-- ── MOTOR GRID ── -->
+  <div class="moto-grid" *ngIf="!loading && !error && motors.length > 0">
+
+    <div
+      class="motor-card"
+      *ngFor="let motor of motors; let i = index"
+      [class.disabled]="!motor.isAvailable"
+      [style.animation-delay]="(i * 0.08) + 's'">
+
+      <!-- image area -->
+      <div class="card-image-wrap">
+        <img class="motor-image" [src]="motor.imageUrl" alt="{{ motor.brand }}" />
+        <div class="image-overlay"></div>
+
+        <!-- availability badge -->
+        <div class="avail-badge" [class.unavailable]="!motor.isAvailable">
+          <span class="badge-dot"></span>
+          {{ motor.isAvailable ? 'Available' : 'Rented Out' }}
+        </div>
+
+        <!-- price pill on image -->
+        <div class="price-pill">
+          <span class="price-amount">${{ motor.pricePerDay }}</span>
+          <span class="price-unit">/day</span>
+        </div>
+      </div>
+
+      <!-- card body -->
+      <div class="card-body">
+        <div class="card-meta">
+          <h3 class="motor-brand">{{ motor.brand }}</h3>
+        </div>
+
+        <!-- controls -->
+        <div class="motor-controls">
+          <div class="days-control">
+            <span class="days-label">Days</span>
+            <input
+              type="number"
+              min="1"
+              class="days-input"
+              [(ngModel)]="motor.days"
+              [disabled]="!motor.isAvailable" />
+          </div>
+
+          <button
+            class="rent-btn"
+            (click)="rentMotor(motor)"
+            [disabled]="!canRent(motor)"
+            [class.unavailable-btn]="!motor.isAvailable">
+            <svg *ngIf="motor.isAvailable" viewBox="0 0 16 16" fill="none" width="14" height="14">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg *ngIf="!motor.isAvailable" viewBox="0 0 16 16" fill="none" width="14" height="14">
+              <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            {{ motor.isAvailable ? 'Rent Now' : 'Unavailable' }}
+          </button>
+        </div>
+
+        <!-- success message -->
+        <div class="success-message" *ngIf="motor.message">
+          <svg viewBox="0 0 16 16" fill="none" width="13" height="13">
+            <circle cx="8" cy="8" r="6.5" stroke="#22c55e" stroke-width="1.4"/>
+            <path d="M5 8l2 2 4-4" stroke="#22c55e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ motor.message }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
