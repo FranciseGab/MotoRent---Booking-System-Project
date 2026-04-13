@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Login } from './login';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
 
 describe('Login Component', () => {
   let component: Login;
@@ -24,7 +25,10 @@ describe('Login Component', () => {
     })
     .overrideComponent(Login, {
       set: {
-        imports: [FormsModule]
+        imports: [CommonModule, FormsModule, RouterLink],
+        providers: [
+          { provide: Router, useValue: routerSpy }
+        ]
       }
     })
     .compileComponents();
