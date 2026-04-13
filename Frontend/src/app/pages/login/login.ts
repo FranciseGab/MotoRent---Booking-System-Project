@@ -1,61 +1,35 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { Login } from './login';
+import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { FormsModule } from '@angular/forms';
-import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 
-describe('Login Component', () => {
-  let component: Login;
-  let authServiceSpy: { login: ReturnType<typeof vi.fn> };
-  let router: Router;
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule],
+  templateUrl: './login.html',
+  styleUrls: ['./login.css']
+})
+export class Login {
+  email = '';
+  password = '';
+  error = '';
 
-  beforeEach(async () => {
-    authServiceSpy = { login: vi.fn() };
+  constructor(private authService: AuthService, private router: Router) {}
 
-    await TestBed.configureTestingModule({
-      imports: [Login, FormsModule],
-      providers: [
-        provideRouter([]),
-        { provide: AuthService, useValue: authServiceSpy }
-      ]
-    }).compileComponents();
+  onSubmit(form?: NgForm) {
+    if (!form?.valid) {
+      this.error = 'Please fill out the form correctly.';
+      return;
+    }
 
-    const fixture = TestBed.createComponent(Login);
-    component = fixture.componentInstance;
-    router = TestBed.inject(Router);
-    vi.spyOn(router, 'navigate').mockResolvedValue(true);
-    fixture.detectChanges();
-  });
-
-  it('should show error if form is invalid', () => {
-    component.onSubmit(undefined as any);
-    expect(component.error).toBe('Please fill out the form correctly.');
-  });
-
-  it('should login successfully and navigate', () => {
-    const mockUser = { id: 1, email: 'test@test.com' };
-    authServiceSpy.login.mockReturnValue(of(mockUser));
-
-    component.email = 'test@test.com';
-    component.password = '1234';
-    component.onSubmit({ valid: true } as any);
-
-    expect(localStorage.getItem('currentUserId')).toBe('1');
-    expect(router.navigate).toHaveBeenCalledWith(['/rent']);
-  });
-
-  it('should show error on login failure', () => {
-    authServiceSpy.login.mockReturnValue(
-      throwError(() => ({ error: { message: 'Invalid credentials' } }))
-    );
-
-    component.email = 'test@test.com';
-    component.password = '1234';
-    component.onSubmit({ valid: true } as any);
-
-    expect(component.error).toBe('Invalid credentials');
-  });
-});
+    this.authService.login(this.email, this.password).subscribe({
+      next: (user) => {
+        localStorage.setItem('currentUserId', String(user.id));
+        this.router.navigate(['/rent']);
+      },
+      error: (err) => (this.error = err.error?.message || 'Login failed')
+    });
+  }
+}
